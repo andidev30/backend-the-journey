@@ -4,6 +4,9 @@ const {
     bookmark
 } = require('../models');
 const joi = require('@hapi/joi');
+const {
+    response
+} = require('express');
 
 exports.create = async (req, res) => {
     try {
@@ -38,6 +41,42 @@ exports.create = async (req, res) => {
             }
         })
     } catch (error) {
+        res.status(500).send({
+            error: {
+                message: "Internal server error",
+                log: error.message
+            }
+        })
+    }
+}
+
+exports.readByUser = async (req, res) => {
+    try {
+        const {
+            id
+        } = req.user
+
+        const data = await bookmark.findAll({
+            include: {
+                model: journeys,
+                as: "journey",
+                attributes: {
+                    exclude: ["updatedAt"],
+                },
+            },
+            attributes: {
+                exclude: ["journeyId", "createdAt", "updatedAt"],
+            },
+            where: {
+                userId: id
+            }
+        })
+
+        res.status(200).send({
+            message: "response success",
+            data
+        })
+    } catch (e) {
         res.status(500).send({
             error: {
                 message: "Internal server error",

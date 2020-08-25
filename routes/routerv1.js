@@ -20,12 +20,14 @@ router.post('/login', authController.login)
 //journeys
 const journeyController = require('../controllers/journeyController');
 router.get('/journeys', journeyController.reads)
+router.get('/journey-by-user', authenticated.cekToken, journeyController.reads)
 router.get('/journey/:id', journeyController.read)
 router.post('/journey', authenticated.cekToken, ckeditorUploader, journeyController.create)
 
 //bookmark
 const bookmarkController = require('../controllers/bookmarkController');
 router.post('/bookmark', authenticated.cekToken, bookmarkController.create)
+router.get('/bookmark-by-user', authenticated.cekToken, bookmarkController.readByUser)
 
 //users
 const userController = require('../controllers/userController');

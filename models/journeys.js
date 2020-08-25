@@ -17,6 +17,7 @@ module.exports = (sequelize, DataTypes) => {
           name: "userId"
         }
       })
+      journeys.hasMany(models.bookmark)
     }
   };
   journeys.init({

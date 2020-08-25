@@ -69,6 +69,39 @@ exports.read = async (req, res) => {
     }
 }
 
+exports.readByUser = async (req, res) => {
+    try {
+        const {id} = req.user
+        const data = await journeys.findOne({
+            include: {
+                model: users,
+                as: "user",
+                attributes: {
+                    exclude: ["createdAt", "updatedAt"],
+                },
+            },
+            attributes: {
+                exclude: ["userId", "updatedAt"],
+            },
+            where: {
+              id,
+            }
+        });
+
+        res.status(200).send({
+            message: "response success",
+            data,
+        });
+    } catch (error) {
+        res.status(500).send({
+            error: {
+                message: "Internal server error",
+                log: error.message,
+            },
+        });
+    }
+}
+
 // exports.postImage = (req, res) => {
 //     try {
 //         res.send({
