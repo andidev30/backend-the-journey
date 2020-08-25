@@ -22,7 +22,8 @@ const journeyController = require('../controllers/journeyController');
 router.get('/journeys', journeyController.reads)
 router.get('/journey-by-user', authenticated.cekToken, journeyController.reads)
 router.get('/journey/:id', journeyController.read)
-router.post('/journey', authenticated.cekToken, ckeditorUploader, journeyController.create)
+// router.post('/journey', authenticated.cekToken, ckeditorUploader, journeyController.create)
+router.post('/journey', authenticated.cekToken, journeyController.create)
 
 //bookmark
 const bookmarkController = require('../controllers/bookmarkController');

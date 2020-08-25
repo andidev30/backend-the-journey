@@ -122,23 +122,23 @@ exports.create = async (req, res) => {
         const {
             id
         } = req.user
-        const image = "http://localhost:5000/" + req.file.path
+        // const image = "http://localhost:5000/" + req.file.path
 
 
         // res.send({
-        //     data: image
+        //     data: req.body
         // })
 
         const {
             title,
-            description
+            content
         } = req.body
 
         const result = await journeys.create({
             userId: id,
             title,
-            description,
-            image: image
+            description: content,
+            image: "tes"
         })
 
         if (result) {
